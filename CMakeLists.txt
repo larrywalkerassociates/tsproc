@@ -44,6 +44,12 @@ set(PACKAGE_VERSION "1.0.4")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 SET( CMAKE_CXX_FLAGS  "${CMAKE_Fortran_FLAGS_RELEASE}")
+option(TSPROC_STATIC_INTEL_RUNTIME
+       "On Windows with Intel Fortran, link Intel runtime libraries statically."
+       OFF)
+if(CMAKE_HOST_WIN32 AND TSPROC_STATIC_INTEL_RUNTIME AND CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
+  string(APPEND CMAKE_Fortran_FLAGS_RELEASE " /libs:static /threads")
+endif()
 set( CMAKE_EXE_LINKER_FLAGS="-static" )
 
 cmake_minimum_required(VERSION 3.6)
